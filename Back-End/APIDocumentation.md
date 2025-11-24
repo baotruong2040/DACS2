@@ -89,8 +89,6 @@ Defined in: `routes/userRoutes.js`
     }
     ```
 
-> **Note:** Your `userRoutes.js` currently has a bug. The route `/updateProfile` is defined as a `GET` request and points to `getUserProfile` instead of `updateUserProfile`. You should fix it to `router.put('/profile', protect, updateUserProfile)` to use the logic in `controllers/userController.js`.
-
 ---
 
 ## **3. Products (`/products`)**

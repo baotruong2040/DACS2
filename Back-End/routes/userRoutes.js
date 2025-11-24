@@ -7,6 +7,6 @@ const router = express.Router();
 // Đường dẫn này được BẢO VỆ bởi middleware 'protect'
 // Client phải gửi Token mới vào được đây
 router.get('/profile', protect, getUserProfile);
-router.post('/updateProfile', protect, getUserProfile);
+router.put('/updateProfile', protect, getUserProfile);
 
 export default router;
