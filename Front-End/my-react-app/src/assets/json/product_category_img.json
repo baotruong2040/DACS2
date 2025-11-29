@@ -1,0 +1,28 @@
+{
+    "categories": [
+        {
+            "category": "laptop-moi",
+            "img_src": "/pictures/category-pictures/laptop-gaming.jpg"
+        },
+        {
+            "category": "laptop-ai",
+            "img_src": "/pictures/category-pictures/laptop-ai.png"
+        },
+        {
+            "category": "laptop-sinh-vien",
+            "img_src": "/pictures/category-pictures/laptop-sinh-vien.png"
+        },
+        {
+            "category": "laptop-van-phong",
+            "img_src": "/pictures/category-pictures/laptop-van-phong.png"
+        },
+        {
+            "category":"laptop-nhap-khau",
+            "img_src":"/pictures/category-pictures/laptop-nhap-khau.png"
+        },
+        {
+            "category": "laptop-gaming",
+            "img_src": "/pictures/category-pictures/laptop-gaming.jpg"
+        }
+    ]
+}

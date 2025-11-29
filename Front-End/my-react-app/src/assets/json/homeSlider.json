@@ -1,0 +1,21 @@
+{
+    "slider": [
+        {
+            "src": "/pictures/banner-black-friday-pc-1.jpg",
+            "alt": "slider 1"
+        },
+        {
+            "src": "/pictures/banner-trang-chu-asus-hiku.jpg",
+            "alt": "slider 2"
+        },
+        {
+            "src": "/pictures/laptop-1758247902.png",
+            "alt": "slider 3"
+        }
+        ,
+        {
+            "src": "/pictures/macbook-1759221641.png",
+            "alt": "slider 4"
+        }
+    ]
+}

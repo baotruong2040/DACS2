@@ -1,11 +1,11 @@
 /* src/index.css */
+@import "https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"; 
 :root {
-  --border-color: #000000;
-  --border-width: 2px;
-  --accent-color: #2962ff; /* Xanh Neon */
-  --bg-white: #ffffff;
-  --text-black: #000000;
-  --gray-light: #eeeeee;
+    --color-global: #3278f6;
+    --white: #fff;
+    --text-black: #29324e;
+    --grey-bold: #8d94ac;
+    --color-red: #fb4e4e
 }
 
 * {
@@ -15,23 +15,16 @@
 }
 
 body {
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f4f4f4;
-  color: var(--text-black);
-}
-
-/* Class tiện ích dùng chung */
-.container {
-  max-width: 1200px;
+  min-height: 100vh;
+  color: #000;
+  font-family: "Chakra Petch";
   margin: 0 auto;
-  padding: 0 15px;
+  background: #f3f3f3;
+  font-weight: 400;
+  font-size: 14px;
+  min-width: 1200px;
 }
 
-ul {
-  list-style: none;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+img { max-width: 100%; display: block; }

@@ -1,0 +1,123 @@
+.container {
+    width: 230.4px;
+    background-color: white;
+}
+
+.container-small{
+    width: calc(100% / 4);
+    background-color: white;
+}
+
+.product-item {
+    width: 100%;
+    overflow: hidden;
+    border: 1px solid #ededed;
+}
+
+.product-img {
+    display: block;
+    position: relative;
+    height: 205px;
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.product-img img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    object-fit: contain;
+
+}
+
+.hidden {
+    display: none;
+}
+
+.box-sale {
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 4px 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #000;
+    background-color: #8fff00;
+}
+
+.product-info {
+    border-top: 2px solid #ededed;
+    padding: 12px;
+}
+
+.product-name {
+    font-weight: 600;
+    word-break: break-all;
+    height: 38px;
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 9;
+}
+
+.info-review {
+    display: flex;
+    align-items: center;
+
+}
+
+.info-review span {
+    font-size: 12px;
+    color: #8d94ac;
+    margin-left: 8px;
+}
+.icon-star {
+    width: 60px;
+    height: 12px;
+    background: url(https://www.tncstore.vn/static/assets/default/images/icon_star.png?v=1);
+    background-size: 60px 75px;
+    background-position: 0 -63px;
+}
+
+.product-price {
+
+}
+
+.old-price {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    color: var(--grey-bold, #8d94ac);
+    margin-top: 8px;
+    display: block;
+    height: 20px;
+}
+
+.new-price {
+    display: flex;
+    align-items: center;
+}
+
+.price {
+    color: var(--color-red);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 28px;
+}
+
+.sale-off {
+    border: 2px solid var(--color-red);
+    width: 38px;
+    height: 20px;
+    line-height: 18px;
+    text-align: center;
+    margin-left: 8px;
+    color: var(--color-red);
+    font-size: 12px;
+    font-weight: 600;
+}

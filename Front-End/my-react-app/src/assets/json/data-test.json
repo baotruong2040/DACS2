@@ -1,0 +1,37 @@
+{
+"data": [
+    {
+      "id": 3,
+      "name": "Dell XPS 15 9530",
+      "slug": "dell-xps-15-9530-1763540816816",
+      "brand": "Dell",
+      "price": "45000000.00",
+      "description": "\u003Cp\u003ESiêu phẩm...\u003C/p\u003E",
+      "specs": {
+        "cpu": "i9",
+        "ram": "32GB"
+      },
+      "stock_quantity": 5,
+      "thumbnail_url": "http://localhost:5000/uploads/dell-thumb.jpg",
+      "created_at": "2025-11-19T08:26:56.000Z"
+    },
+    {
+      "id": 2,
+      "name": "MacBook Air M2 Midnight",
+      "slug": "macbook-air-m2-midnight-1763538602682",
+      "brand": "Apple",
+      "price": "26500000.00",
+      "description": "\u003Cp\u003ELaptop siêu mỏng nhẹ...\u003C/p\u003E",
+      "specs": {
+        "cpu": "Apple M2 8-core",
+        "ram": "8GB Unified",
+        "storage": "256GB SSD",
+        "screen": "13.6 inch Liquid Retina",
+        "battery": "18 hours"
+      },
+      "stock_quantity": 8,
+      "thumbnail_url": "https://example.com/macbook.jpg",
+      "created_at": "2025-11-19T07:50:02.000Z"
+    }
+  ]
+}
