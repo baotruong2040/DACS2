@@ -1,0 +1,11 @@
+{
+    "brands": [
+        { "name": "intel", "img_src": "/pictures/logoBrand/intel.jpg" },
+        { "name": "acer",  "img_src": "/pictures/logoBrand/acer.png" },
+        { "name": "amd",   "img_src": "/pictures/logoBrand/amd.jpg" },
+        { "name": "asus",  "img_src": "/pictures/logoBrand/asus.png" },
+        { "name": "dell",  "img_src": "/pictures/logoBrand/dell.png" },
+        { "name": "lenovo","img_src": "/pictures/logoBrand/lenovo.png" },
+        { "name": "msi",   "img_src": "/pictures/logoBrand/msi.png" }
+    ]
+}

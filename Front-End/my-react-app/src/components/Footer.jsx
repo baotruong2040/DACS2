@@ -9,11 +9,11 @@ const footerLinks = [
   {
     title: "Danh Mục Sản Phẩm",
     links: [
-      { name: "PC Gaming", url: "/gaming-pc.html" },
-      { name: "Laptop Gaming", url: "/gaming-laptop.html" },
-      { name: "VGA NVidia Rtx 5070", url: "/vga-nvidia-rtx-5070.html" },
-      { name: "Ps5 Rẻ nhất Việt Nam", url: "/may-play-station-5.html" },
-      { name: "VGA NVidia Rtx 5060", url: "/vga-rtx-5060.html" },
+      { name: "PC Gaming", url: "/gaming-pc" },
+      { name: "Laptop Gaming", url: "/laptop-gaming" },
+      { name: "VGA NVidia Rtx 5070", url: "/vga-nvidia-rtx-5070" },
+      { name: "Ps5 Rẻ nhất Việt Nam", url: "/may-play-station-5" },
+      { name: "VGA NVidia Rtx 5060", url: "/vga-rtx-5060" },
     ]
   },
   {

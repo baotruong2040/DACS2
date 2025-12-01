@@ -11,6 +11,7 @@
 .category {
     background-color: white;
     padding: 24px;
+    margin: 32px 0;
 }
 
 .title {
@@ -106,4 +107,9 @@
     display: block;
     margin: 0 auto;
     object-fit: contain;
+}
+
+.logoSlide {
+    margin-bottom: 32px;
+    
 }

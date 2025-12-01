@@ -7,6 +7,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import FilterSidebar from "../components/FilterSidebar";
 import ProductCard from "../components/ProductCard";
+import NotFound from './NotFound';
 
 import { MdKeyboardArrowRight } from "react-icons/md";
 
@@ -14,6 +15,7 @@ import {categories} from "../assets/json/product_category_img.json"
 
 const Products = () => {
     const CATEGORY_MAP = {
+        'laptop-moi': "Tất cả sản phẩm",
         'laptop-ai': 'Laptop AI - Trí Tuệ Nhân Tạo',
         'laptop-gaming': 'Laptop Gaming - Chiến Game Đỉnh Cao',
         'laptop-sinh-vien': 'Laptop Sinh Viên - Giá Tốt',
@@ -37,16 +39,21 @@ const Products = () => {
     const {categorySlug} = useParams();
     
     //lấy category
+    let defaultCategory = 'laptop-all';
     const currentCategory = searchParams.get('category') || categorySlug;
     console.log(currentCategory);
-    
+    if (currentCategory) {
+        defaultCategory = currentCategory;
+    }    
     //tên hiển thị
     const displayTitle = CATEGORY_MAP[currentCategory] || "Tất cả sản phẩm";
     
     let img_url = "/pictures/category-pictures/laptop-gaming.jpg";
-    let foundItem = categories.find(item => item.category === currentCategory);
+    let foundItem = categories.find(item => item.category === defaultCategory);
     if (foundItem) {
         img_url = foundItem.img_src;
+    }else {
+        return <NotFound/>
     }
 
     const fetchProducts = async (pageNumber, isLoadMore = false) => {
@@ -190,7 +197,7 @@ const Products = () => {
                     <div className={style['product-list']}>
                         {products.length > 0 ? (
                             products.map((p) => (
-                                <ProductCard key={p.id} products={p} small={true}/>
+                                <div className={style['product-item']}><ProductCard key={p.id} products={p} small={false}/></div>
                             ))
                         ) : (
                             <p>Không tìm thấy sản phẩm nào.</p>

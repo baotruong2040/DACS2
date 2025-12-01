@@ -16,7 +16,7 @@ const ProductCard = ({products, small}) => {
         <div className={`${small ? style['container-small'] : style.container}`}>
             <div className={style['product-item']}>
                 <a href="/" className={style['product-img']}>
-                    <img src={img_src} alt="" />
+                    <img src={img_src} alt="" loading="lazy" />
                     <span className={`${style['box-sale']} ${bestchoice ? '' : style.hidden}`}>Best Choice</span>
                 </a>
 
@@ -35,6 +35,7 @@ const ProductCard = ({products, small}) => {
                     </div>
                 </div>
             </div>
+        <div className={style.border}></div>
         </div>
     </>
     )

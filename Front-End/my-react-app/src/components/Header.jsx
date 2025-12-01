@@ -5,6 +5,7 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 import { FaSearch } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 
 
 const Header = () => {
@@ -12,7 +13,7 @@ const Header = () => {
     <>
       <header className={style.header}>
         <div className={style['header-top']}>
-          <div className={style['header-top-component']}><a href='/laptop-moi'>Tất cả sản phẩm</a></div>
+          <div className={style['header-top-component']}><a href='/laptop-all'>Tất cả sản phẩm</a></div>
           <div className={style['header-top-component']}><a>(081) 903.106</a></div>
           <div className={style['header-top-component']}><a>laphupstore.dev.test@gmail.com</a></div>
         </div>
@@ -40,7 +41,7 @@ const Header = () => {
               </div>
 
               <div className={style['header-mid-right']}>
-                <a href="/" className={style.users}>
+                <a href="/login" className={style.users}>
                   <FaUser color='white'/>
                   <span className={`${style['users-span']} ${style['txt-hover']}`}>Tài Khoản</span>
                 </a>

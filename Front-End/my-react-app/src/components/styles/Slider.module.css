@@ -1,64 +1,14 @@
 
-.slider {
-    width: 1200px;
+
+.image img{
+    max-width: 1200px;
     height: auto;
-    overflow: hidden;
-}
+    margin: 0 auto;
+}   
 
-figure {
-    position: relative;
-    left: 0;
-    width: 400%;
-    animation: 10s slide infinite;
-}
-
-.slide {
-    position: relative;
-    width: 25%;
-    float: left;
-}
-
-@keyframes slide{
-    0%{
-        left:0;
-    }
-    10%{
-        left:0;
-    }
-    20%{
-        left:-100%;
-    }
-    30%{
-        left:-100%;
-    }
-    40%{
-        left:-200%;
-    }
-    50%{
-        left:-200%;
-    }
-    55%{
-        left:-300%;
-    }
-    65%{
-        left:-300%;
-    }
-    66%{
-        left:-200%;
-    }
-    74%{
-        left:-200%;
-    }
-    75%{
-        left:-100%;
-    }
-    85%{
-        left:-100%;
-    }
-    90%{
-        left:0;
-    }
-    100%{
-        left:0;
-    }
+.slick-dots {
+    bottom: 20px !important; 
+    
+    /* Đảm bảo nó nổi lên trên ảnh */
+    z-index: 10;
 }
