@@ -1,0 +1,100 @@
+/* --- FILTER SIDEBAR --- */
+.filter-sidebar {
+  background: #fff;
+  padding: 15px;
+  border-radius: var(--radius-md);
+  width: 100%; /* Hoặc set width cứng 250px nếu cần */
+}
+
+.filter-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.filter-header {
+  font-size: 14px;
+  font-weight: 700;
+  color: #888;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.filter-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.filter-item {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-main);
+  position: relative;
+  padding-left: 30px; /* Chừa chỗ cho checkbox custom */
+}
+
+/* Custom Checkbox */
+.filter-item input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  color: black !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 18px;
+  width: 18px;
+  border: 1px solid black;
+  border-radius: 3px;
+}
+
+.filter-item:hover input ~ .checkmark {
+  border-color: var(--color-primary);
+}
+
+/* Khi đã check */
+.filter-item input:checked ~ .checkmark {
+  background-color: black;
+  border-color: black;
+}
+
+/* Dấu tích bên trong */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.filter-item input:checked ~ .checkmark:after {
+  display: block;
+  left: 5px;
+  top: 1px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.filter-count {
+  margin-left: auto;
+  color: #999;
+  font-size: 12px;
+}
+
+.filter-divider {
+  border: 0;
+  border-top: 1px solid #eee;
+  margin: 20px 0;
+}

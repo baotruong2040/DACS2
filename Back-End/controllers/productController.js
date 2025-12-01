@@ -27,9 +27,19 @@ export const getProducts = async (req, res) => {
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 10;
         const offset = (page - 1) * limit;
-
-        const products = await getAllProducts(limit, offset);
-        const total = await countProducts();
+        // Lấy slug category từ URL (VD: ?category=laptop-gaming)
+        const categorySlug = req.query.category || null;
+        const filters = {};
+        if (req.query.brand) {
+            filters.brands = req.query.brand.split(','); 
+        }
+        if (req.query.price) {
+            const [min, max] = req.query.price.split('-');
+            filters.minPrice = Number(min);
+            if (max) filters.maxPrice = Number(max);
+        }
+        const products = await getAllProducts(limit, offset, filters, categorySlug);
+        const total = await countProducts(categorySlug);
 
         // DUYỆT QUA TỪNG SẢN PHẨM ĐỂ PARSE SPECS
         const parsedProducts = products.map(product => parseProductSpecs(product));
@@ -73,9 +83,9 @@ export const getProductDetail = async (req, res) => {
 // (Giữ nguyên logic, nhưng bạn nên thêm reload lại trang danh sách để test)
 export const createNewProduct = async (req, res) => {
     try {
-        const { name, brand, price } = req.body;
+        const { name, brand, old_price } = req.body;
 
-        if (!name || !brand || !price) {
+        if (!name || !brand || !old_price) {
             return res.status(400).json({ message: 'Thiếu thông tin bắt buộc!' });
         }
 

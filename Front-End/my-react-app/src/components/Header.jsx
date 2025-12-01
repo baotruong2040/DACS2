@@ -12,7 +12,7 @@ const Header = () => {
     <>
       <header className={style.header}>
         <div className={style['header-top']}>
-          <div className={style['header-top-component']}><a>Tất cả sản phẩm</a></div>
+          <div className={style['header-top-component']}><a href='/laptop-moi'>Tất cả sản phẩm</a></div>
           <div className={style['header-top-component']}><a>(081) 903.106</a></div>
           <div className={style['header-top-component']}><a>laphupstore.dev.test@gmail.com</a></div>
         </div>

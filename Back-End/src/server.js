@@ -10,6 +10,7 @@ import productRoutes from '../routes/productRoutes.js';
 import orderRouter from '../routes/orderRoutes.js';
 import reviewRoute from '../routes/reviewRoutes.js';
 import uploadRoutes from '../routes/uploadRoutes.js';
+import categoryRoutes from '../routes/categoryRoutes.js'
 
 dotenv.config();
 //STUFF IDK
@@ -33,12 +34,13 @@ app.get('/', (req, res) => {
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 // Route
-app.use('/api/auth', authRoutes);       //Login, Register
-app.use('/api/users', userRoutes);      //Profile, Change info
-app.use('/api/products', productRoutes);//CRUD Products
-app.use("/api/orders", orderRouter);    //Make order, Get order history
-app.use("/api/reviews", reviewRoute);   //User make review, Show star
-app.use('/api/upload', uploadRoutes);   //Upload images
+app.use('/api/auth', authRoutes);           //Login, Register
+app.use('/api/users', userRoutes);          //Profile, Change info
+app.use('/api/products', productRoutes);    //CRUD Products
+app.use("/api/orders", orderRouter);        //Make order, Get order history
+app.use("/api/reviews", reviewRoute);       //User make review, Show star
+app.use('/api/upload', uploadRoutes);       //Upload images
+app.use('/api/categories', categoryRoutes);   //Get All Categories 
 
 // Test Database Connection
 app.get('/test-db', async (req, res) => {

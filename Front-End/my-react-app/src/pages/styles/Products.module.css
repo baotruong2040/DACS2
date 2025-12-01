@@ -16,9 +16,12 @@
     color: #8d94ac;
 }
 
+.trang-chu p {
+    color: black;
+    
+}
 .container {
     max-width: 1200px;
-    background-color: white;
     margin: 0 auto;
     
 }
@@ -35,8 +38,11 @@
 }
 
 .left {
+    max-height: 460px;
     padding: 24px;
     width: 290px;
+    background-color: white;
+
 }
 
 .left-title {
@@ -48,6 +54,8 @@
 .right {
     padding: 24px;
     width: calc(100% - 290px - 32px);
+    background-color: white;
+
 }
 
 .right-heading {

@@ -6,10 +6,10 @@ import style from './styles/ProductCard.module.css'
 const ProductCard = ({products, small}) => {
     let img_src = products.thumbnail_url;
     let name = products.name;
-    let old_price = 0;
+    let old_price = Number(products.old_price).toLocaleString('vi-VN');
     let price = Number(products.price).toLocaleString('vi-VN');
-    let discount = 0;
-    let bestchoice = true;
+    let discount = products.discount_percentage;
+    let bestchoice = products.badge;
     
     return (
     <>

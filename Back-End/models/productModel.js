@@ -1,20 +1,81 @@
 import db from '../config/db.js';
 
 // 1. Lấy tất cả sản phẩm
-export const getAllProducts = async (limit = 12, offset = 0) => {
-    // Lấy thêm tổng số dòng để làm phân trang
-    const query = `
-        SELECT * FROM products 
-        ORDER BY created_at DESC 
-        LIMIT ? OFFSET ?
+export const getAllProducts = async (limit, offset, filters ={}, categorySlug = null) => {
+    const { brands, minPrice, maxPrice } = filters || {};    
+    let query = `
+        SELECT p.*, c.name as category_name 
+        FROM products p
+        LEFT JOIN categories c ON p.category_id = c.id
+        WHERE 1=1 
     `;
-    const [rows] = await db.query(query, [limit, offset]);
+    const params = [];
+
+    // 1. Lọc theo danh mục
+    if (categorySlug) {
+        query += ` AND c.slug = ? `;
+        params.push(categorySlug);
+    }
+
+    // 2. Lọc theo Hãng - Dùng toán tử IN
+    // brands là mảng ['Asus', 'Dell']
+    if (brands && brands.length > 0) {
+        // Tạo chuỗi dấu hỏi: "?, ?" tương ứng số lượng hãng
+        const placeholders = brands.map(() => '?').join(',');
+        query += ` AND p.brand IN (${placeholders}) `;
+        params.push(...brands);
+    }
+
+    // 3. Lọc theo Giá
+    if (minPrice !== undefined && maxPrice !== undefined) {
+        query += ` AND p.price BETWEEN ? AND ? `;
+        params.push(minPrice, maxPrice);
+    } else if (minPrice !== undefined) {
+        query += ` AND p.price >= ? `; // Trường hợp "Trên 50 triệu"
+        params.push(minPrice);
+    }
+
+    // Sắp xếp và phân trang
+    query += ` ORDER BY p.created_at DESC LIMIT ? OFFSET ?`;
+    params.push(limit, offset);
+
+    const [rows] = await db.query(query, params);
     return rows;
 };
 
 // 2. Đếm tổng số sản phẩm (Để tính số trang)
-export const countProducts = async () => {
-    const [rows] = await db.query('SELECT COUNT(*) as total FROM products');
+export const countProducts = async (categorySlug, filters= {}) => {
+    const { brands, minPrice, maxPrice } = filters || {};
+    let query = `
+        SELECT COUNT(*) as total 
+        FROM products p
+        LEFT JOIN categories c ON p.category_id = c.id
+        WHERE 1=1 
+    `;
+    const params = [];
+
+    if (categorySlug) {
+        query += ` AND c.slug = ? `;
+        params.push(categorySlug);
+    }
+
+    // 1. Hãng
+    if (brands && brands.length > 0) {
+        const placeholders = brands.map(() => '?').join(',');
+        query += ` AND p.brand IN (${placeholders}) `;
+        params.push(...brands);
+    }
+
+    // 2. Giá
+    if (minPrice !== undefined && maxPrice !== undefined) {
+        query += ` AND p.price BETWEEN ? AND ? `;
+        params.push(minPrice, maxPrice);
+    } else if (minPrice !== undefined) {
+        query += ` AND p.price >= ? `;
+        params.push(minPrice);
+    }
+
+    const [rows] = await db.query(query, params);
     return rows[0].total;
 };
 
@@ -48,10 +109,16 @@ const slugify = (text) => {
 
 export const createProduct = async (product) => {
     const { 
-        name, brand, price, description, 
-        specs, stock_quantity, thumbnail_url,
-        images // <--- Mảng chứa các URL ảnh phụ: ["url1", "url2"]
+        name, brand, description, 
+        specs, stock_quantity, thumbnail_url, images, 
+        categoryId, 
+        old_price, discount_percentage, badge
     } = product;
+
+    let finalPrice = old_price;
+    if (discount_percentage > 0) {
+        finalPrice = old_price * (1 - discount_percentage / 100);
+    }
 
     const connection = await db.getConnection();
     
@@ -64,11 +131,20 @@ export const createProduct = async (product) => {
         const slug = slugify(name) + '-' + Date.now();
 
         const queryProduct = `
-            INSERT INTO products (name, slug, brand, price, description, specs, stock_quantity, thumbnail_url)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO products (
+                name, slug, brand, 
+                price, old_price, discount_percentage, badge,
+                description, specs, stock_quantity, thumbnail_url, 
+                category_id -- <--- THÊM CỘT NÀY VÀO SQL
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `;
+        
         const [result] = await connection.query(queryProduct, [
-            name, slug, brand, price, description, specsJson, stock_quantity, thumbnail_url
+            name, slug, brand, 
+            finalPrice, old_price, discount_percentage, badge,
+            description, specsJson, stock_quantity, thumbnail_url, 
+            categoryId // <--- THÊM GIÁ TRỊ VÀO CUỐI
         ]);
         const newProductId = result.insertId;
 
