@@ -5,7 +5,6 @@ export const getUserProfile = async (req, res) => {
         // req.user.id có được nhờ middleware 'protect'
         const userId = req.user.id;
 
-        // Query DB
         const query = `
             SELECT id, email, full_name, phone_number, address, avatar_url, role, created_at 
             FROM users 
@@ -47,3 +46,13 @@ export const updateUserProfile = async (req, res) => {
         res.status(500).json({ message: 'Lỗi server' });
     }
 };
+
+export const getAllUsers = async (req, res) => {
+    try {
+        const [rows] = await db.query('SELECT * FROM users');
+        res.json(rows);
+    } catch (error) {
+        res.status(500).json({ message: 'Lỗi server'});
+    }
+};
+

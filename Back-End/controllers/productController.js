@@ -3,8 +3,10 @@ import {
     getAllProducts, 
     getProductById, 
     createProduct, 
-    countProducts 
+    countProducts,
+    updateProductById
 } from '../models/productModel.js';
+import db from '../config/db.js';
 
 // Hàm phụ trợ: Parse specs từ chuỗi sang JSON Object
 const parseProductSpecs = (product) => {
@@ -98,5 +100,36 @@ export const createNewProduct = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Lỗi tạo sản phẩm' });
+    }
+};
+
+export const deleteProduct = async (req, res) => {
+    try {
+        await db.query('DELETE FROM products WHERE id = ?', [req.params.id]);
+        res.json({ message: 'Đã xóa sản phẩm' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Lỗi xoá sản phẩm' });
+    }
+};
+
+// PUT /api/products/:id
+export const updateProduct = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const { name, brand, old_price } = req.body;
+
+        // Validate cơ bản
+        if (!name || !brand || !old_price) {
+            return res.status(400).json({ message: 'Thiếu thông tin bắt buộc!' });
+        }
+
+        // Gọi Model
+        await updateProductById(id, req.body);
+
+        res.json({ message: 'Cập nhật sản phẩm thành công' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Lỗi cập nhật sản phẩm' });
     }
 };

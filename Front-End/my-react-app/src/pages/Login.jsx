@@ -3,27 +3,61 @@ import { useState } from "react";
 import style from './styles/LoginStyle.module.css';
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import axiosClient from '../config/axiosClient';
 import { FaGoogle } from "react-icons/fa";
 import { MdKeyboardArrowRight } from "react-icons/md";
-
+import { useAuth } from '../context/AuthContext'; // 1. Import hook
 
 const Login = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const {login} = useAuth();
+    const [formData, setFormData] = useState({
+        email: '',
+        password: ''
+    });
     
-    const handleEmail = (e) => {
-        setEmail(e.target.value);
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
+
+    // Hàm xử lý khi nhập liệu
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
     };
 
-    const handlePassword = (e) => {
-        setPassword(e.target.value);
-    };
+    const handleSubmit = async (e) => {
+        e.preventDefault(); // Chặn load lại trang
+        setLoading(true);
+        setError('');
+        try {
+            // 1. Gọi API Login
+            const res = await axiosClient.post('/auth/login', formData);
+            
+            // Backend trả về: { message: "...", token: "...", user: {...} }
+            console.log("Login Success:", res);
 
-    const handleSubmit = () => {
-        console.log(email);
-        console.log(password);
-    }
+            login(res.token, res.user);
+
+            // 3. Thông báo & Chuyển hướng
+            alert("Đăng nhập thành công!");
+            if (res.user.role === 'admin') {
+                navigate('/admin');
+            }else {
+                navigate('/');
+            }
+            window.location.reload();
+
+        } catch (err) {
+            console.error(err);
+            // Hiển thị lỗi từ backend trả về (VD: Sai mật khẩu)
+            setError(err.response?.data?.message || "Đăng nhập thất bại");
+        } finally {
+            setLoading(false);
+        }
+    };
 
     //Giao diện
     return (
@@ -43,8 +77,8 @@ const Login = () => {
                         <h2>Đăng nhập tài khoản</h2>
                         <div className={style['login-form']}>
                             <p>Thông tin đăng nhập</p>
-                            <div className={style['email-input']}> Email <input type="text" name="email" placeholder="Nhập email *" value={email} onChange={handleEmail}/></div>
-                            <div className={style['password-input']}> Mật khẩu <input type="password" name="password" placeholder="Nhập mật khẩu *" value={password} onChange={handlePassword}/></div>
+                            <div className={style['email-input']}> Email <input type="text" name="email" placeholder="Nhập email *" value={formData.email} onChange={handleChange}/></div>
+                            <div className={style['password-input']}> Mật khẩu <input type="password" name="password" placeholder="Nhập mật khẩu *" value={formData.password} onChange={handleChange}/></div>
                             
                             
                             <button className={style.submit} onClick={handleSubmit}><span>ĐĂNG NHẬP</span></button>

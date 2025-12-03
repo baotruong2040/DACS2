@@ -17,7 +17,7 @@ export const protect = (req, res, next) => {
             // 2. Kiểm tra Token
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-            // 3. Nếu ngon lành, lưu thông tin user vào biến req.user
+            // 3. Nếu ổn, lưu thông tin user vào biến req.user
             // Để các hàm phía sau (Controller) biết ai đang gọi API
             req.user = decoded; 
             
@@ -36,7 +36,7 @@ export const protect = (req, res, next) => {
 
 // Middleware phân quyền Admin (Dùng cho sau này)
 export const adminOnly = (req, res, next) => {
-    if (req.user && (req.user.role === 'admin' || req.user.role === 'staff')) {
+    if (req.user && (req.user.role === 'admin')) {
         next();
     } else {
         res.status(403).json({ message: 'Bạn không có quyền truy cập (Admin only)!' });

@@ -169,3 +169,66 @@ export const createProduct = async (product) => {
         throw error;
     }
 };
+
+export const updateProductById = async (id, product) => {
+    const { 
+        name, brand, description, specs, stock_quantity, thumbnail_url, 
+        categoryId, old_price, discount_percentage, badge,
+        images // Mảng ảnh mới từ frontend
+    } = product;
+
+    // 1. Tính toán lại giá bán
+    let finalPrice = old_price;
+    if (discount_percentage > 0) {
+        finalPrice = old_price * (1 - discount_percentage / 100);
+    }
+
+    const connection = await db.getConnection();
+    try {
+        await connection.beginTransaction();
+
+        // 2. Cập nhật bảng products
+        const specsJson = JSON.stringify(specs);
+        // Logic slug: Tên mới -> Slug mới (để SEO tốt hơn)
+        const slugify = (text) => text.toString().toLowerCase().replace(/\s+/g, '-').replace(/[^\w\-]+/g, '').replace(/\-\-+/g, '-').replace(/^-+/, '').replace(/-+$/, '');
+        const slug = slugify(name) + '-' + Date.now();
+
+        const queryUpdate = `
+            UPDATE products 
+            SET name=?, slug=?, brand=?, price=?, old_price=?, discount_percentage=?, badge=?, 
+                description=?, specs=?, stock_quantity=?, thumbnail_url=?, category_id=?
+            WHERE id=?
+        `;
+        
+        await connection.query(queryUpdate, [
+            name, slug, brand, finalPrice, old_price, discount_percentage, badge, 
+            description, specsJson, stock_quantity, thumbnail_url, categoryId, 
+            id
+        ]);
+
+        // 3. Cập nhật bảng product_images (Gallery)
+        // Cách xử lý: Nếu có gửi mảng images lên, ta Xóa hết ảnh cũ -> Thêm ảnh mới
+        if (images && Array.isArray(images)) {
+            // Xóa cũ
+            await connection.query('DELETE FROM product_images WHERE product_id = ?', [id]);
+
+            // Thêm mới (nếu mảng không rỗng)
+            if (images.length > 0) {
+                const imageValues = images.map((url, index) => [id, url, index]);
+                await connection.query(
+                    'INSERT INTO product_images (product_id, image_url, display_order) VALUES ?', 
+                    [imageValues]
+                );
+            }
+        }
+
+        await connection.commit();
+        connection.release();
+        return true;
+
+    } catch (error) {
+        await connection.rollback();
+        connection.release();
+        throw error;
+    }
+};

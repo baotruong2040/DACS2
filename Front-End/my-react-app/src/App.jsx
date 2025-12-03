@@ -8,6 +8,11 @@ import ProductDetail from './pages/productDetail';
 import NotFound from './pages/NotFound';
 import LogoSlider from './components/LogoSlider';
 import Login from './pages/Login';
+import AdminLayout from './layout/AdminLayout';
+import AdminProducts from './pages/AdminProducts';
+import AdminUsers from './pages/AdminUsers';
+import AdminProductForm from './pages/AdminProductForm';
+
 function App() {
   return (
     <>
@@ -18,12 +23,19 @@ function App() {
         
         <Route path="/login" element={<Login />} />
 
-
         <Route path="/:categorySlug" element={<Products />} />
 
-        
         {/* Trang 404 (Nếu nhập linh tinh) */}
         <Route path="*" element={<NotFound/>} />
+      
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<AdminProducts />} />
+          <Route path="products" element={<AdminProducts />} />
+          <Route path="users" element={<AdminUsers />} />
+
+          <Route path="products/new" element={<AdminProductForm />} />       {/* Route Thêm */}
+          <Route path="products/edit/:id" element={<AdminProductForm />} /> {/* Route Sửa */}
+        </Route>
       </Routes>
 
       {/* <Footer /> */}

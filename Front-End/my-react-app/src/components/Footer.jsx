@@ -11,25 +11,25 @@ const footerLinks = [
     links: [
       { name: "PC Gaming", url: "/gaming-pc" },
       { name: "Laptop Gaming", url: "/laptop-gaming" },
-      { name: "VGA NVidia Rtx 5070", url: "/vga-nvidia-rtx-5070" },
+      { name: "Laptop Văn Phòng", url: "/laptop-van-phong" },
       { name: "Ps5 Rẻ nhất Việt Nam", url: "/may-play-station-5" },
-      { name: "VGA NVidia Rtx 5060", url: "/vga-rtx-5060" },
+      { name: "Laptop AI", url: "/laptop-ai" },
     ]
   },
   {
     title: "Thông Tin Chung",
     links: [
       { name: "Giới Thiệu", url: "/gioi-thieu" },
-      { name: "Tuyển Dụng", url: "#" },
+      { name: "Tuyển Dụng", url: "/tuyen-duing" },
       { name: "Tin Tức", url: "/tin-tuc" },
-      { name: "Ý Kiến Khách Hàng", url: "#" },
+      { name: "Ý Kiến Khách Hàng", url: "/khao-sat" },
       { name: "Liên Hệ Hợp Tác", url: "/lien-he" },
     ]
   },
   {
     title: "Chính Sách",
     links: [
-      { name: "Quy Định Chung", url: "#" },
+      { name: "Quy Định Chung", url: "/quy-dinh" },
       { name: "Chính Sách Vận Chuyển", url: "/chinh-sach-van-chuyen" },
       { name: "Chính Sách Bảo Hành", url: "/chinh-sach-bao-hanh" },
       { name: "Chính Sách Đổi Trả", url: "/chinh-sach-doi-tra" },

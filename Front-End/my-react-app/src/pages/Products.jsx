@@ -73,7 +73,6 @@ const Products = () => {
                 }
 
                 // BƯỚC 3: Tạo URL hoàn chỉnh
-                // Kết quả: http://.../api/products?brand=Asus&limit=20&page=1&category=...
                 const url = `${API_URL}/products?${params.toString()}`;
 
                 console.log("Calling API:", url); // <--- Check log xem đúng chưa
@@ -84,7 +83,7 @@ const Products = () => {
                 const newData = res.data.data ? res.data.data : res.data;
                 
                 if (res.data.pagination) {
-                setTotalCount(res.data.pagination.total_items);
+                    setTotalCount(res.data.pagination.total_items);
                 }
 
                 if (isLoadMore) {

@@ -1,0 +1,159 @@
+/* src/styles/admin.css */
+.admin-container {
+  display: grid;
+  grid-template-columns: 250px 1fr; /* Sidebar 250px, còn lại là Content */
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.admin-sidebar {
+  background-color: #1c2431; /* Màu tối chuyên nghiệp */
+  color: white;
+  padding: 20px;
+}
+
+.admin-logo {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #333;
+}
+
+.admin-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.nav-item {
+  color: #ccc;
+  text-decoration: none;
+  padding: 12px 15px;
+  border-radius: 4px;
+  transition: 0.3s;
+  display: block;
+}
+
+.nav-item:hover {
+  background-color: var(--color-primary); /* Màu xanh/đỏ chủ đạo */
+  color: white;
+}
+
+/* Content */
+.admin-content {
+  background-color: #f4f6f8;
+}
+
+.admin-header {
+  background: white;
+  padding: 15px 30px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: flex-end;
+  font-weight: 600;
+}
+
+.admin-body {
+  padding: 30px;
+}
+
+/* Bảng dữ liệu (Table Style) */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.admin-table th, .admin-table td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.admin-table th {
+  background-color: #f9fafb;
+  font-weight: 600;
+  color: #555;
+}
+
+.action-btn {
+  background-color: var(--color-global);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  margin-right: 5px;
+  font-size: 16px;
+}
+
+.btn-edit {
+  background: #eab308; color: white; 
+} 
+.btn-delete {
+  background: #ef4444; color: white; 
+} 
+
+.admin-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.best-choice {
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+input[type="checkbox"], 
+input[type="radio"] {
+  width: auto; /* Trả về kích thước tự động */
+  display: inline-block;
+  margin-right: 8px; /* Thêm chút lề phải cho đẹp */
+}
+
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 15px;
+}
+
+.btn-save {
+  grid-column: span 2; /* Nút lưu dài hết bề ngang */
+  background-color: var(--color-global);
+  color: white;
+  padding: 15px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+}

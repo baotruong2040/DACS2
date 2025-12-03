@@ -6,9 +6,12 @@ import { FaSearch } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
 import { Link } from 'react-router-dom';
-
+import { useAuth } from '../context/AuthContext';
 
 const Header = () => {
+
+  const { user, isAuthenticated, logout } = useAuth();
+
   return (
     <>
       <header className={style.header}>
@@ -41,10 +44,17 @@ const Header = () => {
               </div>
 
               <div className={style['header-mid-right']}>
-                <a href="/login" className={style.users}>
+                {isAuthenticated ? (
+                  <a href="/profile" className={style.users}>
+                    <FaUser color='white'/>
+                    <span className={`${style['users-span']} ${style['txt-hover']}`}>{user.full_name}</span>
+                  </a>
+                ) : (
+                  <a href="/login" className={style.users}>
                   <FaUser color='white'/>
                   <span className={`${style['users-span']} ${style['txt-hover']}`}>Tài Khoản</span>
                 </a>
+                )}
 
                 <a href="/" className={style.cart}>
                   <FaShoppingCart color='white'/>
