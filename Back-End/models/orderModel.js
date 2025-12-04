@@ -59,3 +59,43 @@ export const getOrdersByUserId = async (userId) => {
     const [rows] = await db.query(query, [userId]);
     return rows;
 };
+
+export const getAllOrders = async (req, res) => {
+    try {
+        // Join bảng orders với users để lấy email người mua
+        // Join bảng order_items để đếm số lượng món (tùy chọn)
+        const query = `
+            SELECT o.*, u.email, u.full_name as account_name
+            FROM orders o
+            LEFT JOIN users u ON o.user_id = u.id
+            ORDER BY o.created_at DESC
+        `;
+        const [rows] = await db.query(query);
+        res.json(rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Lỗi server' });
+    }
+};
+
+// --- [ADMIN] 2. CẬP NHẬT TRẠNG THÁI ---
+export const updateOrderStatus = async (req, res) => {
+    try {
+        const orderId = req.params.id;
+        const { status } = req.body; 
+
+        // Danh sách trạng thái hợp lệ
+        const validStatuses = ['pending', 'processing', 'shipping', 'delivered', 'cancelled'];
+        
+        if (!validStatuses.includes(status)) {
+            return res.status(400).json({ message: 'Trạng thái không hợp lệ' });
+        }
+
+        await db.query('UPDATE orders SET status = ? WHERE id = ?', [status, orderId]);
+
+        res.json({ message: 'Cập nhật trạng thái thành công' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Lỗi server' });
+    }
+};

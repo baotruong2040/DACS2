@@ -78,7 +78,7 @@ const Login = () => {
                         <div className={style['login-form']}>
                             <p>Thông tin đăng nhập</p>
                             <div className={style['email-input']}> Email <input type="text" name="email" placeholder="Nhập email *" value={formData.email} onChange={handleChange}/></div>
-                            <div className={style['password-input']}> Mật khẩu <input type="password" name="password" placeholder="Nhập mật khẩu *" value={formData.password} onChange={handleChange}/></div>
+                            <div className={style['password-input']}> Mật khẩu <form onSubmit={handleSubmit} style={{height:'100%'}}><input type="password" name="password" placeholder="Nhập mật khẩu *" value={formData.password} onChange={handleChange}/></form></div>
                             
                             
                             <button className={style.submit} onClick={handleSubmit}><span>ĐĂNG NHẬP</span></button>

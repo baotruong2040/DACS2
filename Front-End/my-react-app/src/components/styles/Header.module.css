@@ -61,7 +61,7 @@ img {
     align-items: center;
     text-align: center;
     justify-content: center;
-    width: 200px;
+    min-width: 200px;
     height: 40px;
     gap: 5px;
     border: 2px solid #545b71;
@@ -162,6 +162,7 @@ img {
     margin-left: 5px;
     color: white;
     position: relative;
+    min-width: 65px;
 }
 
 .txt-hover::before {

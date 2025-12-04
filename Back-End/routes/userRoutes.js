@@ -1,5 +1,5 @@
 import express from 'express';
-import { getUserProfile, updateUserProfile, getAllUsers } from '../controllers/userController.js';
+import { getUserProfile, updateUserProfile, getAllUsers, createUser, changeUserRole, adminResetPassword} from '../controllers/userController.js';
 import { protect, adminOnly } from '../src/middlewares/authMiddleware.js';
 
 const router = express.Router();
@@ -9,5 +9,11 @@ const router = express.Router();
 router.get('/', protect, adminOnly, getAllUsers);
 router.get('/profile', protect, getUserProfile);
 router.put('/updateProfile', protect, updateUserProfile);
+
+
+router.get('/', protect, adminOnly, getAllUsers);           // Xem list
+router.post('/', protect, adminOnly, createUser);           // Thêm mới
+router.put('/:id/role', protect, adminOnly, changeUserRole); // Đổi quyền
+router.put('/:id/password', protect, adminOnly, adminResetPassword);
 
 export default router;

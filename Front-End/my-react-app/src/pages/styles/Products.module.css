@@ -42,7 +42,8 @@
     padding: 24px;
     width: 290px;
     background-color: white;
-
+    position: sticky;
+    top: 120px;
 }
 
 .left-title {

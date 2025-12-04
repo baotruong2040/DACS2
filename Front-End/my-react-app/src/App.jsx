@@ -12,6 +12,7 @@ import AdminLayout from './layout/AdminLayout';
 import AdminProducts from './pages/AdminProducts';
 import AdminUsers from './pages/AdminUsers';
 import AdminProductForm from './pages/AdminProductForm';
+import AdminUserForm from './pages/AdminUserForm';
 
 function App() {
   return (
@@ -32,9 +33,10 @@ function App() {
           <Route index element={<AdminProducts />} />
           <Route path="products" element={<AdminProducts />} />
           <Route path="users" element={<AdminUsers />} />
+          <Route path='users/new' element={<AdminUserForm/>}/>
 
-          <Route path="products/new" element={<AdminProductForm />} />       {/* Route Thêm */}
-          <Route path="products/edit/:id" element={<AdminProductForm />} /> {/* Route Sửa */}
+          <Route path="products/new" element={<AdminProductForm />} />
+          <Route path="products/edit/:id" element={<AdminProductForm />} />
         </Route>
       </Routes>
 
