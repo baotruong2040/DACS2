@@ -1,12 +1,17 @@
 // src/routes/orderRoutes.js
 import express from 'express';
-import { placeOrder, getMyOrders } from '../controllers/orderController.js';
-import { protect } from '../src/middlewares/authMiddleware.js';
+import { placeOrder, getMyOrders, getAllOrders, updateOrderStatus, getOrderById } from '../controllers/orderController.js';
+import { protect, adminOnly } from '../src/middlewares/authMiddleware.js';
 
 const orderRouter = express.Router();
 
-// Các chức năng này đều yêu cầu đăng nhập -> Dùng middleware 'protect'
+// User
 orderRouter.post('/', protect, placeOrder); // Tạo đơn hàng
 orderRouter.get('/my-orders', protect, getMyOrders); // Xem lịch sử
+
+// Admin
+orderRouter.get('/admin/all', protect, getAllOrders);
+orderRouter.get('/admin/:id', protect, getOrderById);
+orderRouter.put('/:id/status', protect, updateOrderStatus);
 
 export default orderRouter;

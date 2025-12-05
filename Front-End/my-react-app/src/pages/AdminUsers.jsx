@@ -31,7 +31,6 @@ const AdminUsers = () => {
 
   // --- 2. ĐỔI MẬT KHẨU ---
   const handleResetPassword = async (userId) => {
-    // Dùng prompt đơn giản để nhập pass mới
     const newPass = window.prompt("Nhập mật khẩu mới cho user này:");
     if (newPass) {
         try {
@@ -42,6 +41,8 @@ const AdminUsers = () => {
         }
     }
   };
+  
+
 
   return (
     <div>
@@ -55,7 +56,7 @@ const AdminUsers = () => {
           <tr>
             <th>ID</th>
             <th>Tên / Email</th>
-            <th>Vai trò)</th>
+            <th>Vai trò</th>
             <th>Hành động</th>
           </tr>
         </thead>
@@ -79,12 +80,11 @@ const AdminUsers = () => {
                 </select>
               </td>
               <td>
-                <button 
-                    className="action-btn" 
-                    style={{background:'#3b82f6', color:'white'}}
-                    onClick={() => handleResetPassword(user.id)}
-                >
+                <button className="action-btn" style={{background:'#3b82f6', color:'white'}} onClick={() => handleResetPassword(user.id)}>
                     Đổi Pass
+                </button>
+                <button className="action-btn" style={{background:'red', color:'white'}} onClick={() => {alert('Đã xoá')}}>
+                    Xoá
                 </button>
               </td>
             </tr>

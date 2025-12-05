@@ -13,6 +13,8 @@ import AdminProducts from './pages/AdminProducts';
 import AdminUsers from './pages/AdminUsers';
 import AdminProductForm from './pages/AdminProductForm';
 import AdminUserForm from './pages/AdminUserForm';
+import AdminOrders from './pages/AdminOrders';
+import AdminOrderDetail from './pages/AdminOrderDetail';
 
 function App() {
   return (
@@ -37,6 +39,9 @@ function App() {
 
           <Route path="products/new" element={<AdminProductForm />} />
           <Route path="products/edit/:id" element={<AdminProductForm />} />
+
+          <Route path='orders' element={<AdminOrders/>} />
+          <Route path='orders/:id' element={<AdminOrderDetail/>}/>
         </Route>
       </Routes>
 

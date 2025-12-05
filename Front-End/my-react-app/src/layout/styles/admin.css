@@ -156,3 +156,50 @@ input[type="radio"] {
   margin-top: 20px;
   font-weight: 700;
 }
+
+/* Layout chia 2 cột cho trang chi tiết */
+.admin-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr; /* Cột trái nhỏ, cột phải to */
+  gap: 20px;
+}
+
+.detail-card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px dashed #eee;
+  font-size: 14px;
+}
+
+.status-select {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  flex: 1;
+}
+.btn-outline {
+  background-color: var(--color-global);
+  color: white;
+  border: none;
+  height: 30px;
+  padding: 5px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.btn-order {
+  max-width: 34.4px;
+  background-color: var(--color-global);
+  color: white;
+  border: none;
+  padding: 0 5px;
+  text-align: center;
+}
