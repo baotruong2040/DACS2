@@ -31,7 +31,7 @@ const AdminLayout = () => {
   return (
     <div className="admin-container">
       <aside className="admin-sidebar">
-        <div className="admin-logo">ADMIN PANEL</div>
+        <div className="admin-logo">LAPHUB MANAGER</div>
         <nav className="admin-nav">
           <Link to="/admin/products" className="nav-item">Sản phẩm</Link>
           {isAdmin && (

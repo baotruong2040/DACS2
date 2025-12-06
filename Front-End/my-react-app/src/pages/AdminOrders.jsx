@@ -79,7 +79,7 @@ const AdminOrders = () => {
               <th>Tổng tiền</th>
               <th>Ngày đặt</th>
               <th>Trạng thái</th>
-              <th>Hành động</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>

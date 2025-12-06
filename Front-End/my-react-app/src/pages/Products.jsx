@@ -59,27 +59,22 @@ const Products = () => {
     const fetchProducts = async (pageNumber, isLoadMore = false) => {
             setLoading(true);
             try {
-                // BƯỚC 1: Tạo đối tượng URLSearchParams từ params hiện tại trên URL
-                // Nó sẽ tự động lấy: ?brand=Asus&price=...
+                
                 const params = new URLSearchParams(searchParams);
-
-                // BƯỚC 2: Bổ sung thêm các tham số bắt buộc
+             
                 params.set('limit', 20);
                 params.set('page', pageNumber);
 
-                // Nếu có category (từ useParams hoặc URL), đảm bảo nó được gửi đi
                 if (currentCategory) {
                     params.set('category', currentCategory);
                 }
 
-                // BƯỚC 3: Tạo URL hoàn chỉnh
                 const url = `${API_URL}/products?${params.toString()}`;
 
-                console.log("Calling API:", url); // <--- Check log xem đúng chưa
+                console.log("Calling API:", url);
 
                 const res = await axios.get(url);
                 
-                // Fix lấy dữ liệu an toàn
                 const newData = res.data.data ? res.data.data : res.data;
                 
                 if (res.data.pagination) {

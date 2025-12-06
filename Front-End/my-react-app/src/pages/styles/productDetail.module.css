@@ -1,0 +1,176 @@
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+.breadcrumb {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    height: 80px;
+    align-items: center;
+}
+
+.breadcrumb p {
+    width: fit-content;
+    display: inline;
+    color: black;
+}
+
+.trang-chu {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: #8d94ac;
+}
+
+.main-product-detail {
+    padding: 24px;
+    background-color: white;
+}
+
+.content {
+    display: flex;
+}
+
+.product-image-container {
+    width: 290px;
+}
+
+.product-image-container .thumbnail {
+    width: 100%;
+    min-height: 250px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.image-thumb {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.thumb-item {
+    width: calc(100% / 3 - 8px);
+    height: 75px;
+    margin-bottom: 8px;
+    margin-right: 8px;
+    border: 1px solid #ededed;
+    transition: all 0.1s ease-in;
+}
+
+.thumb-item.active {
+    border: 2px solid var(--color-global);
+}
+
+.thumb-item img {
+    display: block;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.product-main-detail {
+    width: calc(100% - 390px - 290px - 48px);
+    margin: 0 24px;
+}
+
+.logo img {
+    height: 80px;
+    width: 80px;
+    object-fit: contain;
+}
+
+.name {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.info {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: #8d94ac;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #ededed;
+}
+
+.review {
+    display: flex;
+    align-items: center;
+    padding-right: 10px;
+}
+
+.icon-star {
+    background: url(https://www.tncstore.vn/static/assets/default/images/icon_star.png?v=1) no-repeat;
+    display: block;
+    background-size: 60px 75px;
+    width: 60px;
+    height: 12px;
+    background-position: 0 0;
+    margin-left: 5px;
+}
+
+.review-count {
+    padding: 0 10px;
+    border-right: 1px solid #ccc;;
+    border-left: 1px solid #ccc;;
+
+}
+
+
+.review-count span {
+
+}
+
+.sold {
+    padding-left: 10px;
+}
+
+.specs {
+    margin-top: 20px;
+}
+
+.specs li{
+    list-style: outside;
+    line-height: 22px;
+}
+
+.product-main-right {
+    width: 390px;
+
+}
+
+.offer {
+    margin-bottom: 20px;
+}
+
+.offer .title {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    background: #fb4e4e;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.title p {
+    margin-left: 5px;
+}
+
+.offer-content {
+    padding: 12px;
+    border: 1px solid #fb4e4e;
+}
+
+.offer-content p {
+    font-size: 16px;
+    line-height: 22px;
+}
+
+.offer-content span {}

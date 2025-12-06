@@ -57,6 +57,7 @@ img {
 }
 
 .dropbox {
+    position: relative;
     display: flex;
     align-items: center;
     text-align: center;
@@ -69,6 +70,10 @@ img {
     margin-right: 15px;
 }
 
+.dropbox:hover .dropdown {
+    display: block;
+}
+
 .farBars {
     margin: 0 5px;
     font-size: 12;
@@ -79,6 +84,53 @@ img {
     position: relative;
 }
 
+.dropdown {
+    position: absolute;
+    top: 100%;
+    left: -1;
+    background-color: #29324e;
+    width: 200px;
+    display: none;
+    border-left: 2px solid #545b71;
+    border-right: 2px solid #545b71;
+    border-bottom: 2px solid #545b71;
+    transition: all 0.2s ease;
+}
+
+.dropdown-li {
+    position: relative;
+    text-align: left;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.dropdown-li span {
+    z-index: 9;
+}
+
+.dropdown-li:hover .txt-hover::before {
+    width: 100%;
+    transition: .5s;  
+}
+
+.dropdown-li::before {
+    content: "";
+    top: 0;
+    left: 110%;
+    height: 100%;
+    width: 100%;
+    transition: all 0.2s ease-in;
+    position: absolute;
+    background-color: var(--color-global);
+    transform: skewX(20deg);
+}
+
+.dropdown-li:hover::before {
+    left: 155px;
+}
 .search-bar {
     background-color: white;
     width: 45%;
@@ -163,6 +215,12 @@ img {
     color: white;
     position: relative;
     min-width: 65px;
+}
+
+.txt-hover {
+    width: fit-content;
+    position: relative;
+    display: inline-block;
 }
 
 .txt-hover::before {

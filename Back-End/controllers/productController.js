@@ -4,7 +4,8 @@ import {
     getProductById, 
     createProduct, 
     countProducts,
-    updateProductById
+    updateProductById,
+    getProductId
 } from '../models/productModel.js';
 import db from '../config/db.js';
 
@@ -81,8 +82,22 @@ export const getProductDetail = async (req, res) => {
     }
 };
 
+export const getProductIdBySlug = async (req, res) => {
+    try {
+        const slug = req.params.slug;
+        const product_id = await getProductId(slug);
+        if (!product_id) {
+            return res.status(404).json({message: 'Không tìm tháy sản phẩm'})
+        }
+
+        res.json({product_id});
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Lỗi server' });
+    }
+}
+
 // --- API 3: Tạo sản phẩm mới ---
-// (Giữ nguyên logic, nhưng bạn nên thêm reload lại trang danh sách để test)
 export const createNewProduct = async (req, res) => {
     try {
         const { name, brand, old_price } = req.body;

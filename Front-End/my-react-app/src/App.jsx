@@ -4,7 +4,6 @@ import Header from './components/Header';
 import Home from './pages/Home';
 import Sliders from './components/Sliders';
 import Products from './pages/Products';
-import ProductDetail from './pages/productDetail';
 import NotFound from './pages/NotFound';
 import LogoSlider from './components/LogoSlider';
 import Login from './pages/Login';
@@ -15,6 +14,7 @@ import AdminProductForm from './pages/AdminProductForm';
 import AdminUserForm from './pages/AdminUserForm';
 import AdminOrders from './pages/AdminOrders';
 import AdminOrderDetail from './pages/AdminOrderDetail';
+import ProductDetail from './pages/ProductDetail';
 
 function App() {
   return (
@@ -28,7 +28,8 @@ function App() {
 
         <Route path="/:categorySlug" element={<Products />} />
 
-        {/* Trang 404 (Nếu nhập linh tinh) */}
+        <Route path='/laptop/:productSlug' element={<ProductDetail/>} />
+
         <Route path="*" element={<NotFound/>} />
       
         <Route path="/admin" element={<AdminLayout />}>
@@ -45,7 +46,6 @@ function App() {
         </Route>
       </Routes>
 
-      {/* <Footer /> */}
     </>
   );
 }

@@ -232,3 +232,14 @@ export const updateProductById = async (id, product) => {
         throw error;
     }
 };
+
+export const getProductId = async (slug) => {
+    const [productRows] = await db.query('SELECT * FROM products WHERE slug = ?', [slug]);
+    const product = productRows[0];
+
+    if (!product) return null;
+
+    const product_id = product.id;
+
+    return product_id;
+};

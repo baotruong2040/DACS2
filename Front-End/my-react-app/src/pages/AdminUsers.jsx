@@ -25,7 +25,6 @@ const AdminUsers = () => {
       await axiosClient.put(`/users/${userId}/role`, { role: newRole });
       // Cập nhật state để giao diện đổi ngay lập tức
       setUsers(prev => prev.map(u => u.id === userId ? { ...u, role: newRole } : u));
-      alert("Đã đổi quyền!");
     } catch (e) { alert('Lỗi!'); }
   };
 
