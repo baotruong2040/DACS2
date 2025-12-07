@@ -15,6 +15,8 @@ import AdminUserForm from './pages/AdminUserForm';
 import AdminOrders from './pages/AdminOrders';
 import AdminOrderDetail from './pages/AdminOrderDetail';
 import ProductDetail from './pages/ProductDetail';
+import Cart from './pages/Cart';
+import Checkout from './pages/Checkout';
 
 function App() {
   return (
@@ -29,6 +31,9 @@ function App() {
         <Route path="/:categorySlug" element={<Products />} />
 
         <Route path='/laptop/:productSlug' element={<ProductDetail/>} />
+
+        <Route path='/cart' element={<Cart/>}/>\
+        <Route path='/checkout' element={<Checkout/>}/>
 
         <Route path="*" element={<NotFound/>} />
       

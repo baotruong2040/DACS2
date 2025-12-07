@@ -2,7 +2,7 @@ import style from "./styles/productDetail.module.css"
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axiosClient from '../config/axiosClient';
-import axios from "axios";
+import { addToCart } from "../utils/cartUtils.js";
 import Footer from '../components/Footer.jsx'
 import Header from "../components/Header.jsx"
 import NotFound from "./NotFound.jsx";
@@ -13,11 +13,68 @@ import {brands} from '../assets/json/logo.json'
 
 const ProductDetail = () => {
     const {productSlug} = useParams();
+    const navigate = useNavigate();
+    //Main content
     const [product, setProduct]= useState(null);
     const [loading, setLoading] = useState(true);
     const [syncImage, setSyncImage] = useState(null);
     const [logo, setlogo] = useState(null);
     const [showing, setShowing] = useState(false);
+    const [amount, setAmount] = useState(1);
+    const [stock, setStock] = useState(0);
+
+    //Description
+    const [isExpanded, setIsExpanded] = useState(false);
+    
+    const handleQuantityChange = (e) => {
+        const value = e.target.value;
+        if (/^\d*$/.test(value)) {
+            if (value === '') {
+                setAmount('');
+            } else {
+                // Chặn nhập quá số lượng tồn kho
+                let numValue = parseInt(value);
+                if (numValue > stock) numValue = stock;
+                if (numValue < 1) numValue = 1;
+                
+                setAmount(numValue);
+            }
+        }
+    }
+
+    const handleBlur = () => {
+        if (amount === '' || amount < 1) {
+            setAmount(1);
+        }
+    };
+
+    const decreaseQuantity = () => {
+        if (amount > 1) {
+            setAmount(prev => parseInt(prev) - 1);
+        }
+    };
+
+    const increaseQuantity = () => {
+        if (amount < stock) {
+            setAmount(prev => parseInt(prev) + 1);
+        } else {
+            alert('Đã đạt giới hạn số lượng trong kho!');
+        }
+    };
+
+    const handleAddToCart = () => {
+        if (!product) return;
+        
+        addToCart(product, amount);
+        alert(`Đã thêm ${amount} sản phẩm vào giỏ hàng!`);
+    };
+
+    const handleBuyNow = () => {
+        if (!product) return;
+
+        addToCart(product, amount);
+        navigate('/cart');
+    };
 
     useEffect(() => {
     const fetchProductData = async () => {
@@ -38,6 +95,7 @@ const ProductDetail = () => {
             setProduct(resDetail);
             setSyncImage(resDetail.thumbnail_url);
             setlogo(resDetail.brand);
+            setStock(resDetail.stock_quantity)
         }
 
       } catch (error) {
@@ -133,9 +191,97 @@ const ProductDetail = () => {
                                 </p>
                             </div>
                         </div>
+                        <div className={style['main-price']}>
+                            <div className={style.price}>
+                                <div className={style['final-price']}>{Number(product.price).toLocaleString('vi-VN')}đ</div>
+                                <div className={style['old-price']}>{Number(product.old_price).toLocaleString('vi-VN')}đ</div>
+                                <div className={style.sale}>-{product.discount_percentage}%</div>
+                            </div>
+                            <div className={style['info-vat']}>
+                                <div className={style.item}>Bảo hành 24 tháng</div>
+                            </div>
+                        </div>
+                        <div className={style['add-product']}>
+                            <div className={style['choose-quantity']}>
+                                <span>Số lượng</span>
+                                <div className={style['amount-control']}>
+                                    <button onClick={decreaseQuantity}>-</button> <input type="text" value={amount} onChange={handleQuantityChange} onBlur={handleBlur}/> <button onClick={increaseQuantity}>+</button>
+                                </div>
+                            </div>
+                            <div className={style['add-button']}>
+                                <div className={style['add-cart']} onClick={handleAddToCart}> <p>Thêm Vào Giỏ Hàng</p> </div>
+                                <div className={style['buy-now']} onClick={handleBuyNow}> <p>Mua Ngay</p> </div>
+                            </div>
+                        </div>
                     </div>
                  </div>
             </div>
+            <div className={style['product-content']}>
+                <div className={style['content-left']}>
+                    <div className={style['product-description']}>
+                        <h2>Mô tả sản phẩm</h2>
+                        
+                        <div className={`${style['description-content']} ${isExpanded ? style.expanded : style.collapsed}`} dangerouslySetInnerHTML={{ __html: product.description || "<p>Đang cập nhật...</p>" }} />
+                        
+                        {!isExpanded && <div className={style['gradient-overlay']}></div>}
+
+                        <div>
+                            <button className={style['button-toggle']} onClick={() => setIsExpanded(!isExpanded)}>
+                                {isExpanded ? 'Thu gọn' : 'Xem thêm'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div className={style['content-right']}>
+                    <div className={style['specs-box']}>
+                        <h2>THÔNG SỐ KĨ THUẬT</h2>
+                        <div className={style['specs-content']}>
+                            <table style={{width:559}}>
+                                <tbody>
+                                    <tr>
+                                        <td>CPU</td>
+                                        <td>{product.specs.cpu}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>RAM</td>
+                                        <td>{product.specs.ram}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ổ Cứng</td>
+                                        <td>{product.specs.ssd}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>VGA</td>
+                                        <td>{product.specs.vga}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Màn Hình</td>
+                                        <td>{product.specs.screen}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pin</td>
+                                        <td>{product.specs.battery}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cân Nặng</td>
+                                        <td>{product.specs.weight}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Màu Sắc</td>
+                                        <td>{product.specs.color}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Hệ Điều Hành</td>
+                                        <td>{product.specs.os}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
         <Footer/>
     </>

@@ -99,7 +99,7 @@ const Header = () => {
                 </a>
                 )}
 
-                <a href="/" className={style.cart}>
+                <a href="/cart" className={style.cart}>
                   <FaShoppingCart color='white'/>
                   <span className={style['cart-counter']}>0</span>
                 </a>

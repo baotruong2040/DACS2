@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import style from './styles/ProductCard.module.css'
 
 
@@ -10,18 +11,19 @@ const ProductCard = ({products, small}) => {
     let price = Number(products.price).toLocaleString('vi-VN');
     let discount = products.discount_percentage;
     let bestchoice = products.badge;
+    const navigate = useNavigate();
     
     return (
     <>
-        <div className={`${small ? style['container-small'] : style.container}`}>
+        <div className={`${small ? style['container-small'] : style.container}`} onClick={() => navigate(`/laptop/${products.slug}`)}>
             <div className={style['product-item']}>
-                <a href="/" className={style['product-img']}>
+                <a href={`/laptop/${products.slug}`} className={style['product-img']}>
                     <img src={img_src} alt="" loading="lazy" />
                     <span className={`${style['box-sale']} ${bestchoice ? '' : style.hidden}`}>Best Choice</span>
                 </a>
 
                 <div className={style['product-info']}>
-                    <a href="/" className={style['product-name']}>{name}</a>
+                    <a href={`/laptop/${products.slug}`} className={style['product-name']}>{name}</a>
                     <div className={style['info-review']}>
                         <i className={style['icon-star']}></i>
                         <span>0 đánh giá</span> 
@@ -35,7 +37,7 @@ const ProductCard = ({products, small}) => {
                     </div>
                 </div>
             </div>
-        <div className={style.border}></div>
+            <div className={style.border}></div>
         </div>
     </>
     )
