@@ -37,6 +37,7 @@ const Products = () => {
     // const { categorySlug } = useParams();
     const [searchParams, setSearchParams] = useSearchParams();
     const {categorySlug} = useParams();
+    const currentSearch = searchParams.get('search');
     
     //lấy category
     let defaultCategory = 'laptop-all';
@@ -64,6 +65,10 @@ const Products = () => {
              
                 params.set('limit', 20);
                 params.set('page', pageNumber);
+
+                if (currentSearch) {
+                    params.set('search', currentSearch);
+                }
 
                 if (currentCategory) {
                     params.set('category', currentCategory);
@@ -157,7 +162,7 @@ const Products = () => {
                 </span>
 
         </div>
-        <img src={img_url} alt="" className={style.banner}/>
+        <div className={style.divBanner}></div>
         
         <div className={style.container}>
             <div className={style['product-container']}>

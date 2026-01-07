@@ -30,6 +30,8 @@ export const getProducts = async (req, res) => {
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 10;
         const offset = (page - 1) * limit;
+        const searchKeyword = req.query.search || null;
+
         // Lấy slug category từ URL (VD: ?category=laptop-gaming)
         const categorySlug = req.query.category || null;
         const filters = {};
@@ -41,8 +43,8 @@ export const getProducts = async (req, res) => {
             filters.minPrice = Number(min);
             if (max) filters.maxPrice = Number(max);
         }
-        const products = await getAllProducts(limit, offset, filters, categorySlug);
-        const total = await countProducts(categorySlug);
+        const products = await getAllProducts(limit, offset, filters, categorySlug, searchKeyword);
+        const total = await countProducts(categorySlug, filters, searchKeyword);
 
         // DUYỆT QUA TỪNG SẢN PHẨM ĐỂ PARSE SPECS
         const parsedProducts = products.map(product => parseProductSpecs(product));

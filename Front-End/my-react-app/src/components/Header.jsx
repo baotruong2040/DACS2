@@ -1,6 +1,7 @@
 import React from 'react';
+import { useState } from 'react';
 import style from './styles/Header.module.css';
-import { FaBars } from "react-icons/fa";
+import { FaBars, FaTimes } from "react-icons/fa";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { MdArrowForwardIos } from "react-icons/md";
 import { FaSearch } from "react-icons/fa";
@@ -13,6 +14,8 @@ const Header = () => {
 
   const { user, isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
+  const [keyword, setKeyword] = useState('');
+  const [menuOpen, setMenuOpen] = useState(false);
   const categories = [
     {
       id: 1,
@@ -45,7 +48,24 @@ const Header = () => {
       subCategories: ["Acer", "Asus", "Dell", "Lenovo", "MSI"]
     }
   ];
+  const handleSearch = () => {
+    if (keyword.trim()) {
+      // Chuyển hướng sang trang products kèm query search
+      navigate(`/laptop-all?search=${encodeURIComponent(keyword)}`);
+      setKeyword(''); // Xóa ô tìm kiếm sau khi enter (tùy chọn)
+    }
+  };
 
+  // Xử lý khi nhấn Enter
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
 
   return (
     <>
@@ -58,11 +78,15 @@ const Header = () => {
         <div className={style['header-mid']}>
           <div className={style['container']}>
             <div className={style['header-mid-containter']}>
+              <button className={style['menu-toggle']} onClick={toggleMenu}>
+                {menuOpen ? <FaTimes /> : <FaBars />}
+              </button>
+
               <a href="/" className={style.logo}>
                 <img src="\public\pictures\logo.png" alt="logo" width={165} height={80}/>
               </a>
 
-              <div className={style.dropbox}>
+              <div className={`${style.dropbox} ${menuOpen ? style.active : ''}`}>
                 <FaBars className={style.farBars}/>
                 <span className={`${style['dropbox-text']} ${style['txt-hover']}`}>DANH MỤC SẢN PHẨM</span>
                 <RiArrowDropDownLine size={18}/>
@@ -70,16 +94,19 @@ const Header = () => {
                 <div className={style.dropdown}>
                   <ul>
                     {categories.map((item => (
-                      <li onClick={() => navigate(item.slug)} className={style['dropdown-li']}> <p className={style['txt-hover']}>{item.name}</p> <span><MdArrowForwardIos/></span></li>
+                      <li key={item.id} onClick={() => { navigate(item.slug); setMenuOpen(false); }} className={style['dropdown-li']}> <p className={style['txt-hover']}>{item.name}</p> <span><MdArrowForwardIos/></span></li>
                     )))}
                   </ul>
                 </div>
               </div>
 
+              <div className={`${style.overlay} ${menuOpen ? style.active : ''}`} onClick={() => setMenuOpen(false)}></div>
+
               <div className={style['search-bar']}>
                 <div className={style['search-container']}>
-                  <input type="text" className={style['search-input']} placeholder='Nhập sản phẩm cần tìm...'/>
-                  <button type='submit' className={style['search-button']}>
+                  <input type="text" className={style['search-input']} placeholder='Nhập sản phẩm cần tìm...'onChange={(e) => setKeyword(e.target.value)}
+              onKeyDown={handleKeyPress}/>
+                  <button type='submit' className={style['search-button']} onClick={handleSearch}>
                     <span>Tìm kiếm</span>
                     <FaSearch className={style.FaSearch} color='white' width={20} height={20}/>
                   </button>
@@ -90,7 +117,7 @@ const Header = () => {
                 {isAuthenticated ? (
                   <a href="/profile" className={style.users}>
                     <FaUser color='white'/>
-                    <span className={`${style['users-span']} ${style['txt-hover']}`}>{user.full_name}</span>
+                    <span className={`${style['users-span']} ${style['txt-hover']}`}> <p>{user.full_name}</p> </span>
                   </a>
                 ) : (
                   <a href="/login" className={style.users}>

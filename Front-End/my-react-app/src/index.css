@@ -15,14 +15,12 @@
 }
 
 body {
-  min-height: 100vh;
   color: #000;
   font-family: "Chakra Petch";
   margin: 0 auto;
   background: #f3f3f3;
   font-weight: 400;
   font-size: 14px;
-  min-width: 1200px;
 }
 
 a { text-decoration: none; color: inherit; }

@@ -29,11 +29,10 @@ const Login = () => {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Chặn load lại trang
+        e.preventDefault();
         setLoading(true);
         setError('');
         try {
-            // 1. Gọi API Login
             const res = await axiosClient.post('/auth/login', formData);
             
             // Backend trả về: { message: "...", token: "...", user: {...} }
@@ -45,14 +44,10 @@ const Login = () => {
             alert("Đăng nhập thành công!");
             if (res.user.role === 'admin') {
                 navigate('/admin');
-            }else {
+            } else {
                 navigate('/');
             }
-            window.location.reload();
-
         } catch (err) {
-            console.error(err);
-            // Hiển thị lỗi từ backend trả về (VD: Sai mật khẩu)
             setError(err.response?.data?.message || "Đăng nhập thất bại");
         } finally {
             setLoading(false);
@@ -75,19 +70,40 @@ const Login = () => {
                     
                     <div className={style.login}>
                         <h2>Đăng nhập tài khoản</h2>
-                        <div className={style['login-form']}>
+                        <form className={style['login-form']} onSubmit={handleSubmit}>
                             <p>Thông tin đăng nhập</p>
-                            <div className={style['email-input']}> Email <input type="text" name="email" placeholder="Nhập email *" value={formData.email} onChange={handleChange}/></div>
-                            <div className={style['password-input']}> Mật khẩu <form onSubmit={handleSubmit} style={{height:'100%'}}><input type="password" name="password" placeholder="Nhập mật khẩu *" value={formData.password} onChange={handleChange}/></form></div>
-                            
-                            
-                            <button className={style.submit} onClick={handleSubmit}><span>ĐĂNG NHẬP</span></button>
+                            {error && <div className={style['error-text']}>{error}</div>}
+                            <label className={style['email-input']}>
+                                Email
+                                <input
+                                    type="email"
+                                    name="email"
+                                    placeholder="Nhập email *"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </label>
+                            <label className={style['password-input']}>
+                                Mật khẩu
+                                <input
+                                    type="password"
+                                    name="password"
+                                    placeholder="Nhập mật khẩu *"
+                                    value={formData.password}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </label>
+                            <button className={style.submit} type="submit" disabled={loading}>
+                                <span>{loading ? "Đang xử lý..." : "ĐĂNG NHẬP"}</span>
+                            </button>
                             <button className={style.google}><span><FaGoogle size={12}/> Đăng nhập bằng tài khoản Google</span></button>
                             
                             <Link to={'/forgot-password'}><div className={style['forgot-password']}> Quên mật khẩu? </div></Link>
 
-                            <Link to={'/register'}><div className={style.register}>Bạn chưa có tài khoản? <span>Đăng ký ngày</span> </div></Link>
-                        </div>
+                            <Link to={'/register'}><div className={style.register}>Bạn chưa có tài khoản? <span>Đăng ký ngay</span> </div></Link>
+                        </form>
                     </div>
 
                 </div>

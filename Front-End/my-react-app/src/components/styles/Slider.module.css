@@ -1,14 +1,118 @@
+.sliderContainer {
+    width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+}
 
+.image {
+    width: 100%;
+    position: relative;
+}
 
-.image img{
+.image a {
+    display: block;
+    width: 100%;
+}
+
+.image img {
+    width: 100%;
     max-width: 1200px;
     height: auto;
     margin: 0 auto;
-}   
+    display: block;
+    object-fit: cover;
+}
 
-.slick-dots {
-    bottom: 20px !important; 
-    
-    /* Đảm bảo nó nổi lên trên ảnh */
+/* Slick dots customization */
+.sliderContainer :global(.slick-dots) {
+    bottom: 15px !important;
     z-index: 10;
+}
+
+.sliderContainer :global(.slick-dots li button:before) {
+    font-size: 12px;
+    color: white;
+    opacity: 0.7;
+}
+
+.sliderContainer :global(.slick-dots li.slick-active button:before) {
+    color: white;
+    opacity: 1;
+}
+
+/* ========== RESPONSIVE STYLES ========== */
+
+/* Tablet and smaller laptops */
+@media screen and (max-width: 1024px) {
+    .sliderContainer {
+    }
+
+    .sliderContainer :global(.slick-dots) {
+        bottom: 12px !important;
+    }
+
+    .sliderContainer :global(.slick-dots li button:before) {
+        font-size: 10px;
+    }
+}
+
+/* Tablets */
+@media screen and (max-width: 900px) {
+    .sliderContainer {
+    }
+
+    .image img {
+        max-height: 350px;
+        object-fit: cover;
+    }
+
+    .sliderContainer :global(.slick-dots) {
+        bottom: 10px !important;
+    }
+}
+
+/* Mobile devices */
+@media screen and (max-width: 600px) {
+    .sliderContainer {
+        margin: 0 -10px;
+        width: calc(100% + 20px);
+    }
+
+    .image img {
+        max-height: 200px;
+        object-fit: cover;
+        border-radius: 0;
+    }
+
+    .sliderContainer :global(.slick-dots) {
+        bottom: 8px !important;
+    }
+
+    .sliderContainer :global(.slick-dots li button:before) {
+        font-size: 8px;
+    }
+
+    .sliderContainer :global(.slick-dots li) {
+        margin: 0 2px;
+    }
+}
+
+/* Very small devices */
+@media screen and (max-width: 400px) {
+    .sliderContainer {
+        margin: 0 -8px;
+        width: calc(100% + 16px);
+    }
+
+    .image img {
+        max-height: 160px;
+    }
+
+    .sliderContainer :global(.slick-dots) {
+        bottom: 5px !important;
+    }
+
+    .sliderContainer :global(.slick-dots li button:before) {
+        font-size: 6px;
+    }
 }

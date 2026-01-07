@@ -31,9 +31,9 @@ const Cart = () => {
 
   if (cartItems.length === 0) {
       return (
-          <div className={styles.wrapper}>
+          <div className={styles.wrapper0}>
               <Header />
-              <div className={styles.container} style={{textAlign:'center', padding:'50px'}}>
+              <div className={styles.empty} style={{textAlign:'center', padding:'50px'}}>
                   <h2>Giỏ hàng trống</h2>
                   <Link to="/" style={{color:'blue'}}>Quay lại mua sắm</Link>
               </div>
@@ -44,6 +44,7 @@ const Cart = () => {
 
   return (
     <>
+    <div className={styles.layout}>
     <Header />
     <div className={styles.wrapper}>
       
@@ -146,6 +147,7 @@ const Cart = () => {
       
     </div>
     <Footer/>
+    </div>
     </>
   );
 };

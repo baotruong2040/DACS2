@@ -1,8 +1,9 @@
 import db from '../config/db.js';
 
 // 1. Lấy tất cả sản phẩm
-export const getAllProducts = async (limit, offset, filters ={}, categorySlug = null) => {
+export const getAllProducts = async (limit, offset, filters = {}, categorySlug = null, searchKeyword = null) => {
     const { brands, minPrice, maxPrice } = filters || {};    
+    
     let query = `
         SELECT p.*, c.name as category_name 
         FROM products p
@@ -11,31 +12,34 @@ export const getAllProducts = async (limit, offset, filters ={}, categorySlug = 
     `;
     const params = [];
 
-    // 1. Lọc theo danh mục
+    // Lọc theo Từ khóa tìm kiếm
+    if (searchKeyword) {
+        query += ` AND p.name LIKE ? `;
+        params.push(`%${searchKeyword}%`);
+    }
+
+    // Lọc theo danh mục
     if (categorySlug) {
         query += ` AND c.slug = ? `;
         params.push(categorySlug);
     }
 
-    // 2. Lọc theo Hãng - Dùng toán tử IN
-    // brands là mảng ['Asus', 'Dell']
+    // Lọc theo Hãng
     if (brands && brands.length > 0) {
-        // Tạo chuỗi dấu hỏi: "?, ?" tương ứng số lượng hãng
         const placeholders = brands.map(() => '?').join(',');
         query += ` AND p.brand IN (${placeholders}) `;
         params.push(...brands);
     }
 
-    // 3. Lọc theo Giá
+    // Lọc theo Giá
     if (minPrice !== undefined && maxPrice !== undefined) {
         query += ` AND p.price BETWEEN ? AND ? `;
         params.push(minPrice, maxPrice);
     } else if (minPrice !== undefined) {
-        query += ` AND p.price >= ? `; // Trường hợp "Trên 50 triệu"
+        query += ` AND p.price >= ? `;
         params.push(minPrice);
     }
 
-    // Sắp xếp và phân trang
     query += ` ORDER BY p.created_at DESC LIMIT ? OFFSET ?`;
     params.push(limit, offset);
 
@@ -43,9 +47,10 @@ export const getAllProducts = async (limit, offset, filters ={}, categorySlug = 
     return rows;
 };
 
-// 2. Đếm tổng số sản phẩm (Để tính số trang)
-export const countProducts = async (categorySlug, filters= {}) => {
+// 2. Đếm sản phẩm
+export const countProducts = async (categorySlug, filters = {}, searchKeyword = null) => {
     const { brands, minPrice, maxPrice } = filters || {};
+    
     let query = `
         SELECT COUNT(*) as total 
         FROM products p
@@ -54,19 +59,24 @@ export const countProducts = async (categorySlug, filters= {}) => {
     `;
     const params = [];
 
+    // Lọc theo Từ khóa tìm kiếm
+    if (searchKeyword) {
+        query += ` AND p.name LIKE ? `;
+        params.push(`%${searchKeyword}%`);
+    }
+
     if (categorySlug) {
         query += ` AND c.slug = ? `;
         params.push(categorySlug);
     }
 
-    // 1. Hãng
+    // Copy logic lọc hãng/giá xuống đây như cũ...
     if (brands && brands.length > 0) {
         const placeholders = brands.map(() => '?').join(',');
         query += ` AND p.brand IN (${placeholders}) `;
         params.push(...brands);
     }
 
-    // 2. Giá
     if (minPrice !== undefined && maxPrice !== undefined) {
         query += ` AND p.price BETWEEN ? AND ? `;
         params.push(minPrice, maxPrice);
