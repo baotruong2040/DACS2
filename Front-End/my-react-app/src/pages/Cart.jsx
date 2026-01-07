@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { getCart, removeFromCart, getCartTotal, updateCartQuantity } from '../utils/cartUtils';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import styles from './styles/Cart.module.css'; // Import CSS Module
+import styles from './styles/Cart.module.css';
 
 import { FaTrashAlt, FaGift } from "react-icons/fa";
 
@@ -23,8 +23,9 @@ const Cart = () => {
   };
 
   const handleQuantity = (id, newQty) => {
-      updateCartQuantity(id, newQty);
-      setCartItems(getCart());
+    const safeQty = Math.max(1, newQty);   // không giảm dưới 1
+    updateCartQuantity(id, safeQty);
+    setCartItems(getCart());
   };
 
   const totalAmount = getCartTotal();
@@ -77,16 +78,23 @@ const Cart = () => {
                                 {/* Bộ chỉnh số lượng */}
                                 <div style={{textAlign:'center'}}>
                                     <div className={styles.quantityControl}>
+                                        <button
+                                          className={styles.qtyBtn}
+                                          onClick={() => handleQuantity(item.id, item.quantity - 1)}
+                                          disabled={item.quantity <= 1}
+                                        >-</button>
                                         <input type="text" value={item.quantity} readOnly className={styles.qtyInput} />
-                                        <button className={styles.qtyBtn} onClick={() => handleQuantity(item.id, item.quantity + 1)}>+</button>
-                                        <button className={styles.qtyBtn} onClick={() => handleQuantity(item.id, item.quantity - 1)}>-</button>
+                                        <button
+                                          className={styles.qtyBtn}
+                                          onClick={() => handleQuantity(item.id, item.quantity + 1)}
+                                        >+</button>
                                     </div>
                                     <button className={styles.removeBtn} onClick={() => handleRemove(item.id)}>Xóa</button>
                                 </div>
                             </div>
 
                             {/* Khung Khuyến Mãi (Giống ảnh) */}
-                            <div className={styles.promoBox}>
+                            {/* <div className={styles.promoBox}>
                                 <div className={styles.promoHeader}>
                                     <FaGift /> Khuyến mãi áp dụng
                                 </div>
@@ -95,7 +103,7 @@ const Cart = () => {
                                     <li>Gói vệ sinh dịch vụ Laptop trọn đời trị giá 500.000đ</li>
                                     <li>Dịch vụ cân màu màn hình trị giá 200.000đ</li>
                                 </ul>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 ))}

@@ -41,6 +41,19 @@ const AdminUsers = () => {
     }
   };
   
+  const handleDeleteUser = async (userId) => {
+    const ok = window.confirm('Bạn chắc chắn muốn khoá (xoá mềm) user này?');
+    if (!ok) return;
+    try {
+      await axiosClient.delete(`/users/${userId}`);
+      setUsers(prev => prev.filter(u => u.id !== userId));
+      alert('Đã khoá user thành công');
+    } catch (e) {
+      console.error(e);
+      alert('Khoá user thất bại');
+    }
+  };
+
 
 
   return (
@@ -82,7 +95,7 @@ const AdminUsers = () => {
                 <button className="action-btn" style={{background:'#3b82f6', color:'white'}} onClick={() => handleResetPassword(user.id)}>
                     Đổi Pass
                 </button>
-                <button className="action-btn" style={{background:'red', color:'white'}} onClick={() => {alert('Đã xoá')}}>
+                <button className="action-btn" style={{background:'red', color:'white'}} onClick={() => handleDeleteUser(user.id)}>
                     Xoá
                 </button>
               </td>

@@ -8,6 +8,7 @@ import NotFound from './pages/NotFound';
 import LogoSlider from './components/LogoSlider';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Profile from './pages/Profile';
 import VerifyRegister from './pages/VerifyRegister';
 import AdminLayout from './layout/AdminLayout';
 import AdminProducts from './pages/AdminProducts';
@@ -31,6 +32,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path='/register' element={<Register/>}/>
         <Route path='/verify' element={<VerifyRegister/>}/>
+        <Route path='/profile' element={<Profile/>}/>
 
         <Route path="/:categorySlug" element={<Products />} />
 

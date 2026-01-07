@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './styles/FilterSidebar.css';
 
-const FilterSidebar = ({ onFilterChange }) => {
+const FilterSidebar = ({ onFilterChange, counts }) => {
   // State lưu trữ các lựa chọn
   const [selectedBrands, setSelectedBrands] = useState([]);
   const [selectedPrice, setSelectedPrice] = useState(null);
@@ -21,6 +21,9 @@ const FilterSidebar = ({ onFilterChange }) => {
     { id: '35000000-1000000000', label: 'Trên 35 triệu'},
   ];
 
+  const brandCounts = counts?.brandCounts || {};
+  const priceCounts = counts?.priceRangeCounts || {};
+
   // Xử lý khi bấm Brand
   const handleBrandChange = (brandId) => {
     let newBrands;
@@ -35,7 +38,6 @@ const FilterSidebar = ({ onFilterChange }) => {
 
   // Xử lý khi bấm Giá
   const handlePriceChange = (priceId) => {
-    // Nếu bấm lại cái đang chọn thì bỏ chọn, ngược lại thì chọn cái mới
     const newPrice = selectedPrice === priceId ? null : priceId;
     setSelectedPrice(newPrice);
     onFilterChange({ brand: selectedBrands, price: newPrice });
@@ -56,7 +58,9 @@ const FilterSidebar = ({ onFilterChange }) => {
               />
               <span className="checkmark"></span>
               <span className="filter-label">{brand.label}</span>
-              <span className="filter-count">({brand.count})</span>
+              <span className="filter-count">
+                ({brandCounts[brand.id] ?? 0})
+              </span>
             </label>
           ))}
         </div>
@@ -72,12 +76,14 @@ const FilterSidebar = ({ onFilterChange }) => {
             <label key={price.id} className="filter-item">
               <input 
                 type="checkbox" 
-                checked={selectedPrice === price.id} // Chỉ chọn 1 ô giá
+                checked={selectedPrice === price.id}
                 onChange={() => handlePriceChange(price.id)}
               />
               <span className="checkmark"></span>
               <span className="filter-label">{price.label}</span>
-              <span className="filter-count">({price.count})</span>
+              <span className="filter-count">
+                ({priceCounts[price.id] ?? 0})
+              </span>
             </label>
           ))}
         </div>

@@ -31,8 +31,8 @@ export const deleteVerificationCode = async (email, type) => {
 export const createUser = async (user) => {
     const { email, password_hash, full_name } = user;
     const query = `
-        INSERT INTO users (email, password_hash, full_name, is_verified, role) 
-        VALUES (?, ?, ?, TRUE, 'customer')
+        INSERT INTO users (email, password_hash, full_name, is_verified, role, is_locked) 
+        VALUES (?, ?, ?, TRUE, 'customer', FALSE)
     `;
     const [result] = await db.query(query, [email, password_hash, full_name]);
     return result.insertId; // Trả về ID của user vừa tạo

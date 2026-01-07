@@ -50,10 +50,16 @@ export const updateUserProfile = async (req, res) => {
 
 export const getAllUsers = async (req, res) => {
     try {
-        const query = `SELECT id, full_name, email, role, avatar_url, created_at, is_locked FROM users WHERE is_deleted = FALSE ORDER BY created_at DESC`;
+        const query = `
+            SELECT id, full_name, email, role, avatar_url, created_at, is_locked
+            FROM users
+            WHERE is_locked = FALSE
+            ORDER BY created_at DESC
+        `;
         const [rows] = await db.query(query);
         res.json(rows);
     } catch (error) {
+        console.error(error);
         res.status(500).json({ message: 'Lỗi server' });
     }
 };
@@ -117,5 +123,27 @@ export const adminResetPassword = async (req, res) => {
         res.json({ message: 'Đổi mật khẩu thành công' });
     } catch (error) {
         res.status(500).json({ message: 'Lỗi server' });
+    }
+};
+
+// 5. [ADMIN] XOÁ USER (SOFT DELETE - is_locked)
+export const deleteUser = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        // Không cho khoá chính mình
+        if (req.user && Number(req.user.id) === Number(id)) {
+            return res.status(400).json({ message: 'Không thể khoá tài khoản của chính bạn.' });
+        }
+
+        const [rows] = await db.query('SELECT id FROM users WHERE id = ?', [id]);
+        if (rows.length === 0) return res.status(404).json({ message: 'User không tồn tại' });
+
+        await db.query('UPDATE users SET is_locked = TRUE WHERE id = ?', [id]);
+
+        return res.json({ message: 'Đã khoá user (soft delete)', id });
+    } catch (err) {
+        console.error('deleteUser error:', err);
+        return res.status(500).json({ message: 'Lỗi server' });
     }
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import style from './styles/Header.module.css';
 import { FaBars, FaTimes } from "react-icons/fa";
 import { RiArrowDropDownLine } from "react-icons/ri";
@@ -9,6 +9,7 @@ import { FaUser } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { getCart } from '../utils/cartUtils';
 
 const Header = () => {
 
@@ -16,6 +17,8 @@ const Header = () => {
   const navigate = useNavigate();
   const [keyword, setKeyword] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
+
   const categories = [
     {
       id: 1,
@@ -67,12 +70,25 @@ const Header = () => {
     setMenuOpen(!menuOpen);
   };
 
+  const calcCartCount = () =>
+    getCart().reduce((sum, item) => sum + (item.quantity || 0), 0);
+
+  useEffect(() => {
+    // khởi tạo
+    setCartCount(calcCartCount());
+
+    const handleStorage = () => setCartCount(calcCartCount());
+
+    window.addEventListener('storage', handleStorage);
+    return () => window.removeEventListener('storage', handleStorage);
+  }, []);
+
   return (
     <>
       <header className={style.header}>
         <div className={style['header-top']}>
           <div className={style['header-top-component']}><a href='/laptop-all' className={style['txt-hover']}>Tất cả sản phẩm</a></div>
-          <div className={style['header-top-component']}><a className={style['txt-hover']}>(081) 903.106</a></div>
+          <div className={style['header-top-component']}><a className={style['txt-hover']}>(081) 903.106</a> </div>
           <div className={style['header-top-component']}><a className={style['txt-hover']}>laphupstore.dev.test@gmail.com</a></div>
         </div>
         <div className={style['header-mid']}>
@@ -128,7 +144,7 @@ const Header = () => {
 
                 <a href="/cart" className={style.cart}>
                   <FaShoppingCart color='white'/>
-                  <span className={style['cart-counter']}>0</span>
+                  <span className={style['cart-counter']}>{cartCount}</span>
                 </a>
               </div>
             </div>

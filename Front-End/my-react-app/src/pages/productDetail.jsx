@@ -236,7 +236,7 @@ const ProductDetail = () => {
                     <div className={style['specs-box']}>
                         <h2>THÔNG SỐ KĨ THUẬT</h2>
                         <div className={style['specs-content']}>
-                            <table style={{width:559}}>
+                            <table style={{width: '100%'}}>
                                 <tbody>
                                     <tr>
                                         <td>CPU</td>

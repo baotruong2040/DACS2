@@ -52,17 +52,11 @@ export const clearCart = () => {
 };
 
 export const updateCartQuantity = (productId, newQuantity) => {
-    let cart = getCart();
-    const index = cart.findIndex(item => item.id === productId);
-    
-    if (index > -1) {
-        if (newQuantity <= 0) {
-            // Nếu số lượng về 0 thì xóa luôn
-            cart.splice(index, 1); 
-        } else {
-            cart[index].quantity = newQuantity;
-        }
-        localStorage.setItem('cart', JSON.stringify(cart));
-        window.dispatchEvent(new Event('storage'));
+    const cart = getCart();
+    const idx = cart.findIndex(item => item.id === productId);
+    if (idx > -1) {
+        cart[idx].quantity = Math.max(1, newQuantity); // không dưới 1
     }
+    localStorage.setItem('cart', JSON.stringify(cart));
+    window.dispatchEvent(new Event('storage'));
 };
