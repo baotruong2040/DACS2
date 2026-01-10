@@ -138,6 +138,7 @@ input {
     border: 2px solid var(--color-global);
     cursor: pointer;
     margin-bottom: 16px;
+    display: none;
 }
 
 .google span {
